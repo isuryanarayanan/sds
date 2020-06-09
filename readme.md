@@ -38,3 +38,26 @@ Here the user will be linked to a customer profile model as the user variable, i
 ```
 
 these fields in the profile will only be available for the customer users. Customers have permission to create or change certain models like the profile and event registration model, they will not have permission to edit or interfere with other models for admins and vendors.
+
+Since the vendors does not need information like first and last name they will have a different profile with fields more specific to them.The linking process will be the same only the fields will change, there will be a model called `vendor_profile` just like the customers.
+
+```python
+    user = models.OneToOneField(ExtendedUserModel)
+
+    vendor_addr = models.TextField()
+    phone = models.CharField()
+    zipcode = models.CharField()
+    .
+    .
+    .
+```
+
+Whereas admins dont require detailed information they just have to be authorized so the `admin_profile` will store the admin previlages available to the user.
+
+```python
+    user = models.OneToOneField(ExtendedUserModel)
+
+    is_god = models.BooleanField(default=True)
+    can_edit_vendor = models.BooleanField(default=True)
+    can_edit_customer = models.BooleanField(default=True)
+```
