@@ -1,6 +1,6 @@
 # Social Distancing Service
 
-- Author `@DevDooDan`
+- Author [DevDooDan](https://www.instagram.com/devdoodan/)
 - backend `Django`
 - frontend `Vue js`
 
@@ -18,4 +18,4 @@ is_admin = False
 
 This configuration tells us that the given user is a vendor. Each user will then have a profile attached to the type of user they are, like if a user is a customer then the user will have a profile which will be made specifically for collecting data from the customer side of things and nothing else.
 
-that winds up the breif about user backend you can find more in the backend markdown.
+that winds up the breif about user backend you can find more in `docs/backend`.
