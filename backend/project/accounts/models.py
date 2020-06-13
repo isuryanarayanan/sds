@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.base_user import AbstractBaseUser
-from .managers import UserManager
+from django.contrib.auth.models import AbstractUser
+# from .managers import UserManager
 # Create your models here.
 
 """
@@ -14,22 +14,55 @@ user_modes = (
 )
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractUser):
     email = models.EmailField(unique=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
-    mode = models.CharField(choices=user_modes, max_length=1)
-    is_staff = models.BooleanField(default=False)
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    mode = models.IntegerField(choices=user_modes, default=1)
 
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
 
-    def has_perm(self, perm, obj=None):
-        return self.is_staff
 
-    def has_module_perms(self, app_label):
-        return self.is_staff
+class customer_profile(models.Model):
+    """
+    Profile for customer users
+    """
+    # User
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Verbal identifiers
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "customer profile"
+        verbose_name_plural = "customer profiles"
+
+
+class vendor_profile(models.Model):
+    """
+    Profile for vendor users
+    """
+    # User
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Verbal identifiers
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "vendor profile"
+        verbose_name_plural = "vendor profiles"
+
+
+class administrator_profile(models.Model):
+    """
+    Profile for administrator users
+    """
+    # User
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Verbal identifiers
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "administrator profile"
+        verbose_name_plural = "administrator profiles"
