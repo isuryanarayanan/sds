@@ -37,6 +37,9 @@ class customer_profile(models.Model):
         verbose_name = "customer profile"
         verbose_name_plural = "customer profiles"
 
+    def __str__(self):
+        return f'{self.first_name} | {self.user.email}'
+
 
 class vendor_profile(models.Model):
     """
@@ -52,6 +55,9 @@ class vendor_profile(models.Model):
         verbose_name = "vendor profile"
         verbose_name_plural = "vendor profiles"
 
+    def __str__(self):
+        return f'{self.first_name} | {self.user.email}'
+
 
 class administrator_profile(models.Model):
     """
@@ -66,3 +72,6 @@ class administrator_profile(models.Model):
     class Meta:
         verbose_name = "administrator profile"
         verbose_name_plural = "administrator profiles"
+
+    def __str__(self):
+        return f'{self.first_name} | {self.user.email}'
