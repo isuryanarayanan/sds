@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import (UserCreationForm, UserChangeForm)
-from accounts.models import User
-from accounts.models import customer_profile, vendor_profile, administrator_profile
+from accounts.models.user import User
+from accounts.models.profiles.customer import customer_profile
+from accounts.models.profiles.vendor import vendor_profile
+from accounts.models.profiles.administrator import administrator_profile
 
 admin.site.site_header = 'Social Distancing Service - God Dashboard'
 

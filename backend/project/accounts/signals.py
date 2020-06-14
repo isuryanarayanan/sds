@@ -1,7 +1,9 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from accounts.models import User
-from accounts.models import customer_profile, vendor_profile, administrator_profile
+from accounts.models.user import User
+from accounts.models.profiles.customer import customer_profile
+from accounts.models.profiles.vendor import vendor_profile
+from accounts.models.profiles.administrator import administrator_profile
 
 
 @receiver(post_save, sender=User)
