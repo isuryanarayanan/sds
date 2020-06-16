@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'event.apps.EventConfig',
+    'calendar_app.apps.CalendarAppConfig'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

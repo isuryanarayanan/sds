@@ -14,24 +14,39 @@ class Event(models.Model):
     day = models.DateField()
     # Time slot for the event
     # Start time depicts the begining of the slot
-    start = models.TimeField(auto_now=True)
+    start_time = models.TimeField(auto_now=True)
     # End time depicts the end of the slot
-    end = models.TimeField(auto_now=True)
+    end_time = models.TimeField(auto_now=True)
 
     class Meta:
         app_label = "event"
 
+    def check_overlap(self, fixed_start, fixed_end, new_start, new_end):
+        overlap = False
+        if new_start == fixed_end or new_end == fixed_start:
+            overlap = False
+        elif (new_start >= fixed_start and new_start <= fixed_end) or (new_end >= fixed_start and new_end <= fixed_end):
+            overlap = True
+        elif new_start <= fixed_start and new_end >= fixed_end:
+            overlap = True
+
+        return overlap
+
     def clean(self):
         """
         Checking time slot to be truthful,
-        the time slot should not exceed what the limit of the vendor should be        
+        the time slot should not exceed what the limit of the vendor preset.      
         """
-        start = [self.start.hour, self.start.minute, self.start.second]
-        end = [self.end.hour, self.end.minute, self.end.second]
-        # # Checking time slot to be truthful
-        # if start[0] > end[0] :
-        #     raise ValidationError("Invalid hours.")
-        # else if start[0] <= end[0]:
+        if self.end_time <= self.start_time:
+            raise ValidationError('Ending times must after starting times')
+
+        events = Event.objects.filter(day=self.day, vendor=self.vendor)
+        if events.exists():
+            for event in events:
+                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
+                    raise ValidationError(
+                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
+                            event.start_time) + '-' + str(event.end_time))
 
     def save(self, *args, **kwargs):
         super(Event, self).save(*args, **kwargs)
