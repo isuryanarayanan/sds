@@ -9,7 +9,19 @@ from accounts.models.profiles.administrator import administrator_profile
 admin.site.site_header = 'Social Distancing Service - God Dashboard'
 
 admin.site.register(customer_profile)
-admin.site.register(vendor_profile)
+
+
+class vendorAdmin(admin.ModelAdmin):
+
+    new_calendar = None
+
+    def save_related(self, request, form, formsets, change):
+        super(vendorAdmin, self).save_related(request, form, formsets, change)
+        self.new_calendar = form.instance.calendar.all()
+        # Check overlap here
+
+
+admin.site.register(vendor_profile, vendorAdmin)
 admin.site.register(administrator_profile)
 
 

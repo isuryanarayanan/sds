@@ -15,3 +15,11 @@ def create_user_profile(sender, instance=None, created=False, **kwargs):
             vendor = vendor_profile.objects.create(user=instance)
         if instance.mode == 3:
             administrator = administrator_profile.objects.create(user=instance)
+
+
+# @receiver(post_save, sender=vendor_profile)
+# def vendor_update(sender, instance=None, created=False, **kwargs):
+#     if created:
+#         pass
+#     else:
+#         print(instance.calendar.all())
