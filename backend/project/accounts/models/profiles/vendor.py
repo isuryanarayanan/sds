@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models.user import User
+from engine.models import TimeSlot
 # Create your models here.
 
 
@@ -9,9 +10,9 @@ class vendor_profile(models.Model):
     """
     # User
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Verbal identifiers
-    first_name = models.CharField(max_length=250)
-    last_name = models.CharField(max_length=250)
+
+    # Calendar
+    calendar = models.ManyToManyField(TimeSlot)
 
     class Meta:
         verbose_name = "vendor profile"
@@ -19,4 +20,7 @@ class vendor_profile(models.Model):
         app_label = "accounts"
 
     def __str__(self):
-        return f'{self.first_name} | {self.user.email}'
+        return f'{self.user.email}'
+
+    def save(self, *args, **kwargs):
+        super(vendor_profile, self).save(*args, **kwargs)
