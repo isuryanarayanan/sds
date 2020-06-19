@@ -5,6 +5,8 @@ from accounts.models.user import User
 from accounts.models.profiles.customer import customer_profile
 from accounts.models.profiles.vendor import vendor_profile
 from accounts.models.profiles.administrator import administrator_profile
+from django.core.exceptions import ValidationError
+from engine.engine import checkTestsForSlots
 
 admin.site.site_header = 'Social Distancing Service - God Dashboard'
 
@@ -13,12 +15,19 @@ admin.site.register(customer_profile)
 
 class vendorAdmin(admin.ModelAdmin):
 
-    new_calendar = None
-
     def save_related(self, request, form, formsets, change):
         super(vendorAdmin, self).save_related(request, form, formsets, change)
-        self.new_calendar = form.instance.calendar.all()
         # Check overlap here
+        calendar = []
+
+        for cal in form.instance.calendar.all():
+            calendar.append(cal)
+
+        resp = checkTestsForSlots(calendar)
+        if resp == True:
+            pass
+        else:
+            raise ValidationError("Error in slot")
 
 
 admin.site.register(vendor_profile, vendorAdmin)
