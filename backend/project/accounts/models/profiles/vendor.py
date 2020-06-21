@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models.user import User
-from engine.models import TimeSlot
+from engine.models.TimeSlot import TimeSlot
 from engine.engine import checkTestsForSlots
 from django.core.exceptions import ValidationError
 # Create your models here.
