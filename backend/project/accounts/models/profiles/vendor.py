@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models.user import User
-from engine.models import TimeSlot
+from engine.models.TimeSlot import TimeSlot
+from engine.engine import checkTestsForSlots
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 
@@ -23,4 +25,13 @@ class vendor_profile(models.Model):
         return f'{self.user.email}'
 
     def save(self, *args, **kwargs):
-        super(vendor_profile, self).save(*args, **kwargs)
+        calendar = []
+
+        for cal in self.calendar.all():
+            calendar.append(cal)
+
+        resp = checkTestsForSlots(calendar)
+        if resp == True:
+            super(vendor_profile, self).save(*args, **kwargs)
+        else:
+            raise ValidationError("Error in slot")
