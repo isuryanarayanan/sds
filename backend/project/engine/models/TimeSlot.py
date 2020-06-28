@@ -10,3 +10,8 @@ class TimeSlot(models.Model):
 
     class Meta:
         app_label = "engine"
+
+    def save(self, *args, **kwargs):
+        if self.end > self.start:
+            raise ValueError("Time interval is not valid")
+        super(TimeSlot, self).save(*args, **kwargs)
