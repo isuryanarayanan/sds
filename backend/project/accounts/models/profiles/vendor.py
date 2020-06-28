@@ -1,8 +1,9 @@
 from django.db import models
 from accounts.models.user import User
-from engine.models.TimeSlot import TimeSlot
+from engine.models.TimeSlot import TimeSlot, TimeSlotForVendor
 from engine.engine import checkTestsForSlots
 from django.core.exceptions import ValidationError
+import datetime
 # Create your models here.
 
 
@@ -14,11 +15,22 @@ class vendor_profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # Calendar
+    """
+    Calendar requirements
+    - should not be overlapping
+    - start time and end time should be valid
+    - date should be forward
+    """
     calendar = models.ManyToManyField(TimeSlot)
 
     # Time slot for customers
+    """
+    Time slot requirements
+    - start and end should be valid
+    - interval should be converted to minutes
+    """
     timeslot = models.ForeignKey(
-        TimeSlot, on_delete=models.CASCADE, related_name="timeslot")
+        TimeSlotForVendor, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = "vendor profile"
