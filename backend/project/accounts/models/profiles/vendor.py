@@ -16,6 +16,10 @@ class vendor_profile(models.Model):
     # Calendar
     calendar = models.ManyToManyField(TimeSlot)
 
+    # Time slot for customers
+    timeslot = models.ForeignKey(
+        TimeSlot, on_delete=models.CASCADE, related_name="timeslot")
+
     class Meta:
         verbose_name = "vendor profile"
         verbose_name_plural = "vendor profiles"
