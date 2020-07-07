@@ -60,3 +60,53 @@ Whereas admins dont require detailed information they just have to be authorized
     .
     .
 ```
+
+# `Accounts api`
+
+User creation deals with 2 minimum models and 4 total models. Therefore there is only one endpoint to create each user.
+
+## Endpoint
+
+```url
+https://host:port/accounts/api/v1/create_user/
+```
+
+## Parameters
+
+> User Type | `Intiger`
+
+```python
+1 denotes Customer user
+2 denotes Vendor user
+3 denotes Administrator user (protected view)
+```
+
+The fields will change according to the user type
+
+### Creating a customer user
+
+```json
+{
+  "user_type": integer,
+  "first_name": text,
+  "last_name": text
+}
+```
+
+### Creating a vendor user
+
+```json
+{
+  "user_type": integer,
+  "vendor_name": text
+}
+```
+
+### Creating a administrator user
+
+```json
+{
+  "user_type": integer,
+  "administrator_name": text
+}
+```
