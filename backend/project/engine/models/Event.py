@@ -19,8 +19,7 @@ class Event(models.Model):
         end_minutes = self.datetime.end.hour*60 + self.datetime.end.minute
         start_minutes = self.datetime.start.hour*60 + self.datetime.start.minute
         difference = end_minutes - start_minutes  # The interval in the event
-        print(difference)
-        print(self.vendor.timeslot.interval)
+
         if self.vendor.timeslot.interval >= difference:
             pass
         else:
