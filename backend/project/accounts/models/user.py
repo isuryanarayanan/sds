@@ -14,6 +14,7 @@ user_modes = (
 
 
 class User(AbstractUser):
+
     email = models.EmailField(unique=True)
     mode = models.IntegerField(choices=user_modes, default=1)
 
