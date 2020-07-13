@@ -47,7 +47,8 @@ class CreateUserEngine():
         return str(self.response)
 
     def create_user(self, params):
-        f = CustomerUserCreationForm(params)
+        f = CustomerUserCreationForm(
+            self.username, self.email, params, self.password1, self.password2)
         if f.is_valid():
             self.user = f.save()
 
@@ -63,15 +64,14 @@ class CreateUserEngine():
         """
         if self.username and self.email and self.password1 and self.password2:
             # Create user
-            param = {
-                "username": self.username,
-                "email": self.email,
-                "mode": 1,
-                "password1": self.password1,
-                "password2": self.password2
-            }
-            print("create user")
-            self.create_user(param)
+            # param = {
+            #     "username": self.username,
+            #     "email": self.email,
+            #     "mode": 1,
+            #     "password1": self.password1,
+            #     "password2": self.password2
+            # }
+            self.create_user(1)
             self.response = self.user
 
         try:

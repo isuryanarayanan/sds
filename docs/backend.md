@@ -61,6 +61,23 @@ Whereas admins dont require detailed information they just have to be authorized
     .
 ```
 
+# `JWT Authentication`
+
+The authentication used in the application is Json Web Tokens, using simplejwt library in django.
+Has 2 endpoints
+
+```url
+host:port/accounts/api/v{version}/token/
+```
+
+returns a pair of access and refresh tokens for the given username and password.
+
+```url
+host:port/accounts/api/v{version}/token/refresh/
+```
+
+returns a new refreshed access token.
+
 # `Accounts api`
 
 User creation deals with 2 minimum models and 4 total models. Therefore there is only one endpoint to create each user.
@@ -88,8 +105,10 @@ The fields will change according to the user type
 ```json
 {
   "user_type": integer,
-  "first_name": text,
-  "last_name": text
+  "fields": {
+    "first_name": text,
+    "last_name": text
+  }
 }
 ```
 
@@ -98,7 +117,9 @@ The fields will change according to the user type
 ```json
 {
   "user_type": integer,
-  "vendor_name": text
+  "fields": {
+    "vendor_name": text
+  }
 }
 ```
 
@@ -107,6 +128,8 @@ The fields will change according to the user type
 ```json
 {
   "user_type": integer,
-  "administrator_name": text
+  "fields": {
+    "administrator_name": text
+  }
 }
 ```
