@@ -1,8 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.decorators import permission_classes
 import json
 from accounts.forms.create_user import CustomerUserCreationForm
+
+
+class IsAuthorizedToCreateAdministrator(BasePermission):
+    """
+    Allows access only to authenticated users.
+    """
+
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated)
 
 
 class CreateUserEngine():
@@ -35,22 +45,24 @@ class CreateUserEngine():
         self.email = json.loads(params.body)['email']
         self.password1 = json.loads(params.body)['password1']
         self.password2 = json.loads(params.body)['password2']
-        getattr(self, self.utype.upper())()
-        # try:
-        #     # Only use uppercase names for user methods
-
-        # except AttributeError:
-        #     self.response = "user_type invalid"
+        # if IsAuthenticated.has_permission(self, self.request, self):
+        try:
+            # Only use uppercase names for user methods
+            getattr(self, self.utype.upper())()
+        except AttributeError:
+            self.response = "user_type invalid"
 
     def respond(self):
         # Respond from request.
         return str(self.response)
 
     def create_user(self, params):
-        f = CustomerUserCreationForm(
-            self.username, self.email, params, self.password1, self.password2)
+        f = CustomerUserCreationForm(data=params)
         if f.is_valid():
             self.user = f.save()
+            self.response = self.user
+        else:
+            self.response = "Error"
 
     def create_profile(self):
         pass
@@ -64,15 +76,14 @@ class CreateUserEngine():
         """
         if self.username and self.email and self.password1 and self.password2:
             # Create user
-            # param = {
-            #     "username": self.username,
-            #     "email": self.email,
-            #     "mode": 1,
-            #     "password1": self.password1,
-            #     "password2": self.password2
-            # }
-            self.create_user(1)
-            self.response = self.user
+            param = {
+                "username": self.username,
+                "email": self.email,
+                "mode": 1,
+                "password1": self.password1,
+                "password2": self.password2
+            }
+            self.create_user(param)
 
         try:
             profile_data = json.loads(self.request.body)['profile']
@@ -83,12 +94,65 @@ class CreateUserEngine():
             pass
 
     def VENDOR(self):
-        pass
+        """
+        Vendors users will be created with the username,
+        email and the cleaned password. The profiles will 
+        be created if the profile_data is provided in the
+        request.
+        """
+        if self.username and self.email and self.password1 and self.password2:
+            # Create user
+            param = {
+                "username": self.username,
+                "email": self.email,
+                "mode": 2,
+                "password1": self.password1,
+                "password2": self.password2
+            }
+            self.create_user(param)
+
+        try:
+            profile_data = json.loads(self.request.body)['profile']
+            if profile_data:
+                # Create user profile
+                print("create user profile")
+        except KeyError:
+            pass
+
+    def checkPerm(self):
+        return (
+            IsAuthenticated.has_permission(self, self.request, self) and
+            IsAuthorizedToCreateAdministrator.has_permission(
+                self, self.request, self)
+        )
 
     def ADMINISTRATOR(self):
         # Since it's a protected view
         # Check for auth before responding.
-        pass
+        """
+        Administrators users will be created with the username,
+        email and the cleaned password. The profiles will 
+        be created if the profile_data is provided in the
+        request.
+        """
+        if self.username and self.email and self.password1 and self.password2 and self.checkPerm():
+            # Create user
+            param = {
+                "username": self.username,
+                "email": self.email,
+                "mode": 3,
+                "password1": self.password1,
+                "password2": self.password2
+            }
+            self.create_user(param)
+
+        try:
+            profile_data = json.loads(self.request.body)['profile']
+            if profile_data:
+                # Create user profile
+                print("create user profile")
+        except KeyError:
+            pass
 
 
 class CreateUserView(APIView):

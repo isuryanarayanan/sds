@@ -28,6 +28,7 @@ class CustomerUserCreationForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
         r = User.objects.filter(email=email)
+
         if r.count():
             raise ValidationError("Email already exists")
         return email
@@ -48,11 +49,10 @@ class CustomerUserCreationForm(forms.Form):
         return password2
 
     def save(self, commit=True):
-        print("saving")
         user = User.objects.create_user(
             self.cleaned_data['username'],
             self.cleaned_data['email'],
             self.cleaned_data['mode'],
-            self.cleaned_data['password1']
+            self.cleaned_data['password1'],
         )
         return user

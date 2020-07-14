@@ -6,20 +6,12 @@ from accounts.models.profiles.vendor import vendor_profile
 from accounts.models.profiles.administrator import administrator_profile
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance=None, created=False, **kwargs):
-    if created:
-        if instance.mode == 1:
-            customer = customer_profile.objects.create(user=instance)
-        if instance.mode == 2:
-            vendor = vendor_profile.objects.create(user=instance)
-        if instance.mode == 3:
-            administrator = administrator_profile.objects.create(user=instance)
-
-
-# @receiver(post_save, sender=vendor_profile)
-# def vendor_update(sender, instance=None, created=False, **kwargs):
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance=None, created=False, **kwargs):
 #     if created:
-#         pass
-#     else:
-#         print(instance.calendar.all())
+#         if instance.mode == 1:
+#             customer = customer_profile.objects.create(user=instance)
+#         if instance.mode == 2:
+#             vendor = vendor_profile.objects.create(user=instance)
+#         if instance.mode == 3:
+#             administrator = administrator_profile.objects.create(user=instance)
