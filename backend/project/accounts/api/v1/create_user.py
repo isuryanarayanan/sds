@@ -8,7 +8,7 @@ from accounts.forms.create_user import CustomerUserCreationForm
 
 class IsAuthorizedToCreateAdministrator(BasePermission):
     """
-    Allows access only to authenticated users.
+    Allows access only to authorized users.
     """
 
     def has_permission(self, request, view):
@@ -64,9 +64,6 @@ class CreateUserEngine():
         else:
             self.response = "Error"
 
-    def create_profile(self):
-        pass
-
     def CUSTOMER(self):
         """
         Customer users will be created with the username,
@@ -85,14 +82,6 @@ class CreateUserEngine():
             }
             self.create_user(param)
 
-        try:
-            profile_data = json.loads(self.request.body)['profile']
-            if profile_data:
-                # Create user profile
-                print("create user profile")
-        except KeyError:
-            pass
-
     def VENDOR(self):
         """
         Vendors users will be created with the username,
@@ -110,14 +99,6 @@ class CreateUserEngine():
                 "password2": self.password2
             }
             self.create_user(param)
-
-        try:
-            profile_data = json.loads(self.request.body)['profile']
-            if profile_data:
-                # Create user profile
-                print("create user profile")
-        except KeyError:
-            pass
 
     def checkPerm(self):
         return (
@@ -145,14 +126,6 @@ class CreateUserEngine():
                 "password2": self.password2
             }
             self.create_user(param)
-
-        try:
-            profile_data = json.loads(self.request.body)['profile']
-            if profile_data:
-                # Create user profile
-                print("create user profile")
-        except KeyError:
-            pass
 
 
 class CreateUserView(APIView):

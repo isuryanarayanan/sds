@@ -8,6 +8,7 @@ class HandshakeView(APIView):
     permission_classes = ()
 
     def get(self, request):
+
         content = {
             "handshake": True
         }
