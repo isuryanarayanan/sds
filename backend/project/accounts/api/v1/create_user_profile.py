@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.core.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.decorators import permission_classes
 import json
@@ -32,17 +33,28 @@ class CreateUserProfileEngine():
     def __init__(self, params):
         # Loading defaults
         self.request = params
-        try:
-            getattr(self, self.profiles[self.request.user.mode])()
-        except:
-            self.response = "Error"
+        getattr(self, self.profiles[self.request.user.mode])()
+        # try:
+        #     getattr(self, self.profiles[self.request.user.mode])()
+        # except:
+        #     self.response = "Error"
 
     def respond(self):
         # Respond from request.
         return str(self.response)
 
     def CUSTOMER(self):
-        print("customer profile creation")
+        params = {
+            "user": self.request.user.id,
+            "first_name": json.loads(self.request.body)['first_name'],
+            "last_name": json.loads(self.request.body)['last_name']
+        }
+        f = CustomerProfileCreationForm(data=params)
+        if f.is_valid():
+            f.save()
+            self.response = f.data
+        else:
+            raise ValidationError("Error creating profile")
 
     def VENDOR(self):
         print("vendor profile creation")
