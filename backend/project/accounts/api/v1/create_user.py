@@ -1,14 +1,18 @@
+# Native imports
+import json
+# Rest framework imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.decorators import permission_classes
-import json
+# Importing user creation form
 from accounts.forms.create_user import CustomerUserCreationForm
 
 
 class IsAuthorizedToCreateAdministrator(BasePermission):
     """
-    Allows access only to authorized users.
+    Allows access only to authorized users. For testing the 
+    permission is just for authenticated users.
     """
 
     def has_permission(self, request, view):
@@ -59,10 +63,16 @@ class CreateUserEngine():
             self.response_code = 400
 
     def create_user(self, params):
+        """
+        Creates a user throught the custome user creation 
+        form the parameters are passed through the parent 
+        function.
+        """
         f = CustomerUserCreationForm(data=params)
         if f.is_valid():
             self.user = f.save()
             self.response = str(self.user) + "created"
+            self.response_code = 201
         else:
             self.response = str(f.errors)
             self.response_code = 500
@@ -104,6 +114,11 @@ class CreateUserEngine():
             self.create_user(param)
 
     def checkPerm(self):
+        """
+        Return True if the user is authenticated and has
+        required permissions in this case permission to
+        create an administrator account.
+        """
         return (
             IsAuthenticated.has_permission(self, self.request, self) and
             IsAuthorizedToCreateAdministrator.has_permission(
@@ -114,12 +129,18 @@ class CreateUserEngine():
         # Since it's a protected view
         # Check for auth before responding.
         """
-        Administrators users will be created with the username,
-        email and the cleaned password. The profiles will 
-        be created if the profile_data is provided in the
-        request.
+        Administrators users will be created with the 
+        username, email and the cleaned password. The 
+        profiles will be created if the profile_data is 
+        provided in the request.
         """
-        if self.username and self.email and self.password1 and self.password2 and self.checkPerm():
+
+        if self.checkPerm() == False:
+            self.response = "You are not authorized"
+            self.response_code = 401
+            return
+
+        if self.username and self.email and self.password1 and self.password2:
             # Create user
             param = {
                 "username": self.username,
@@ -129,6 +150,9 @@ class CreateUserEngine():
                 "password2": self.password2
             }
             self.create_user(param)
+        else:
+            self.response = "Internal Server Error"
+            self.response_code = 500
 
 
 class CreateUserView(APIView):

@@ -87,8 +87,7 @@ class CreateUserProfileEngine():
             # Get parameters from request and organize it into the form format.
             params = {
                 "user": self.request.user.id,
-                "first_name": json.loads(self.request.body)['first_name'],
-                "last_name": json.loads(self.request.body)['last_name']
+                "timeslot": json.loads(self.request.body)['timeslot'],
             }
             # CheckUser returns true if there is no profile created for the request user.
             if self.CheckUser(vendor.vendor_profile.objects.all(), self.request.user.id):
