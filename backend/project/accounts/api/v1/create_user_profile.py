@@ -1,13 +1,23 @@
+# Native imports
+import json
+# Django Imports
+from django.core.exceptions import ValidationError
+# Rest Framework Imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.core.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.decorators import permission_classes
-import json
+# Importing Forms
 from accounts.forms.create_user_profile import (
     CustomerProfileCreationForm,
     VendorProfileCreationForm,
     AdministratorProfileCreationForm
+)
+# Importing User Profiles
+from accounts.models.profiles import (
+    customer,
+    vendor,
+    administrator
 )
 
 
@@ -23,6 +33,7 @@ class CreateUserProfileEngine():
     request = None
     # The response to return to the view.
     response = None
+    response_code = None
     # Profiles
     profiles = {
         1: "CUSTOMER",
@@ -33,34 +44,91 @@ class CreateUserProfileEngine():
     def __init__(self, params):
         # Loading defaults
         self.request = params
-        getattr(self, self.profiles[self.request.user.mode])()
-        # try:
-        #     getattr(self, self.profiles[self.request.user.mode])()
-        # except:
-        #     self.response = "Error"
 
-    def respond(self):
-        # Respond from request.
-        return str(self.response)
+        try:
+            getattr(self, self.profiles[self.request.user.mode])()
+        except:
+            self.response = "Error"
+            self.response_code = 500
+
+    def CheckUser(self, objs, id):
+        customers = objs
+        for obj in customers:
+            if obj.id == id:
+                return False
+        return True
 
     def CUSTOMER(self):
-        params = {
-            "user": self.request.user.id,
-            "first_name": json.loads(self.request.body)['first_name'],
-            "last_name": json.loads(self.request.body)['last_name']
-        }
-        f = CustomerProfileCreationForm(data=params)
-        if f.is_valid():
-            f.save()
-            self.response = f.data
-        else:
-            raise ValidationError("Error creating profile")
+        try:
+            # Get parameters from request and organize it into the form format.
+            params = {
+                "user": self.request.user.id,
+                "first_name": json.loads(self.request.body)['first_name'],
+                "last_name": json.loads(self.request.body)['last_name']
+            }
+            # CheckUser returns true if there is no profile created for the request user.
+            if self.CheckUser(customer.customer_profile.objects.all(), self.request.user.id):
+                # Creates the form instance.
+                f = CustomerProfileCreationForm(data=params)
+                if f.is_valid():
+                    f.save()
+                    self.response = f.data
+                else:
+                    raise ValidationError("Error creating profile")
+            else:
+                self.response = "Profile already created"
+                self.response_code = 403
+        except KeyError:
+            self.response = "Invalid parameters"
+            self.response_code = 400
 
     def VENDOR(self):
-        print("vendor profile creation")
+        try:
+            # Get parameters from request and organize it into the form format.
+            params = {
+                "user": self.request.user.id,
+                "first_name": json.loads(self.request.body)['first_name'],
+                "last_name": json.loads(self.request.body)['last_name']
+            }
+            # CheckUser returns true if there is no profile created for the request user.
+            if self.CheckUser(vendor.vendor_profile.objects.all(), self.request.user.id):
+                # Creates the form instance.
+                f = VendorProfileCreationForm(data=params)
+                if f.is_valid():
+                    f.save()
+                    self.response = f.data
+                else:
+                    raise ValidationError("Error creating profile")
+            else:
+                self.response = "Profile already created"
+                self.response_code = 403
+        except KeyError:
+            self.response = "Invalid parameters"
+            self.response_code = 400
 
     def ADMINISTRATOR(self):
-        print("vendor profile creation")
+        try:
+            # Get parameters from request and organize it into the form format.
+            params = {
+                "user": self.request.user.id,
+                "first_name": json.loads(self.request.body)['first_name'],
+                "last_name": json.loads(self.request.body)['last_name']
+            }
+            # CheckUser returns true if there is no profile created for the request user.
+            if self.CheckUser(administrator.administrator_profile.objects.all(), self.request.user.id):
+                # Creates the form instance.
+                f = AdministratorProfileCreationForm(data=params)
+                if f.is_valid():
+                    f.save()
+                    self.response = f.data
+                else:
+                    raise ValidationError("Error creating profile")
+            else:
+                self.response = "Profile already created"
+                self.response_code = 403
+        except KeyError:
+            self.response = "Invalid parameters"
+            self.response_code = 400
 
 
 class CreateUserProfileView(APIView):
@@ -70,7 +138,7 @@ class CreateUserProfileView(APIView):
         # Create the engine.
         Engine = CreateUserProfileEngine(request)
         # Respond.
-        return Response(Engine.respond())
+        return Response(Engine.response, Engine.response_code)
 
     def get(self, request):
         # Send testing response

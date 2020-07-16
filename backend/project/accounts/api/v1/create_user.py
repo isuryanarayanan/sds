@@ -27,6 +27,7 @@ class CreateUserEngine():
     request = None
     # The response to return to the view.
     response = None
+    response_code = None
     # The user type to create
     utype = None
     # Credentials
@@ -40,29 +41,31 @@ class CreateUserEngine():
     def __init__(self, params):
         # Loading defaults
         self.request = params
-        self.utype = json.loads(params.body)['user_type']
-        self.username = json.loads(params.body)['username']
-        self.email = json.loads(params.body)['email']
-        self.password1 = json.loads(params.body)['password1']
-        self.password2 = json.loads(params.body)['password2']
-        # if IsAuthenticated.has_permission(self, self.request, self):
+        try:
+            self.utype = json.loads(params.body)['user_type']
+            self.username = json.loads(params.body)['username']
+            self.email = json.loads(params.body)['email']
+            self.password1 = json.loads(params.body)['password1']
+            self.password2 = json.loads(params.body)['password2']
+        except KeyError:
+            self.response = "Invalid Parameters"
+            self.response_code = 400
+
         try:
             # Only use uppercase names for user methods
             getattr(self, self.utype.upper())()
         except AttributeError:
             self.response = "user_type invalid"
-
-    def respond(self):
-        # Respond from request.
-        return str(self.response)
+            self.response_code = 400
 
     def create_user(self, params):
         f = CustomerUserCreationForm(data=params)
         if f.is_valid():
             self.user = f.save()
-            self.response = self.user
+            self.response = str(self.user) + "created"
         else:
-            self.response = "Error"
+            self.response = str(f.errors)
+            self.response_code = 500
 
     def CUSTOMER(self):
         """
@@ -135,7 +138,7 @@ class CreateUserView(APIView):
         # Create the engine.
         Engine = CreateUserEngine(request)
         # Respond.
-        return Response(Engine.respond())
+        return Response(Engine.response, Engine.response_code)
 
     def get(self, request):
         # Send testing response
