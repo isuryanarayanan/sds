@@ -73,8 +73,10 @@ class CreateUserTestCase(APITestCase):
 
     def test_D_administrator_creation_A(self):
         # Try creating a user with standard parameters.
+
         print(
             "\nRunning user creation test for administrator users (without authorization)")
+
         user = {
             "user_type": "administrator",
             "username": "administrator",
@@ -82,6 +84,7 @@ class CreateUserTestCase(APITestCase):
             "password1": "administrator1",
             "password2": "administrator1"
         }
+
         print(user)
         response = self.client.post(self.url, user, format='json')
         self.assertEqual(response.status_code,
@@ -92,3 +95,33 @@ class CreateUserTestCase(APITestCase):
             print('It should not be created since administrator is a protected view')
         except ObjectDoesNotExist:
             print("Administrator not created.")
+
+    def test_D_administrator_creation_B(self):
+        # Try creating a user with standard parameters.
+
+        print("\nRunning user creation test for administrator users (with authorization)")
+        print("Creating an authorized user")
+
+        authorized_user = User.objects.create_user(
+            'authorizedUser',
+            'authorizedUser@gmail.com',
+            3,
+            'authorizedUser1',
+        )
+
+        # Authenticating the user forcefully
+        self.client.force_authenticate(
+            User.objects.get(username='authorizedUser'))
+
+        user = {
+            "user_type": "administrator",
+            "username": "administrator",
+            "email": "administrator@sds.com",
+            "password1": "administrator1",
+            "password2": "administrator1"
+        }
+        print(user)
+        response = self.client.post(self.url, user, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(User.objects.get(username='administrator').mode, 3)
+        print(f'Created user {User.objects.get(username="administrator")}')
