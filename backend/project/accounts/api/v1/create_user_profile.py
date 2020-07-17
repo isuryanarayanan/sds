@@ -73,8 +73,11 @@ class CreateUserProfileEngine():
                 if f.is_valid():
                     f.save()
                     self.response = f.data
+                    self.response_code = 201
                 else:
                     raise ValidationError("Error creating profile")
+                    self.response = "Error creating profile"
+                    self.response_code = 500
             else:
                 self.response = "Profile already created"
                 self.response_code = 403
@@ -87,6 +90,7 @@ class CreateUserProfileEngine():
             # Get parameters from request and organize it into the form format.
             params = {
                 "user": self.request.user.id,
+                "calendar": json.loads(self.request.body)['calendar'],
                 "timeslot": json.loads(self.request.body)['timeslot'],
             }
             # CheckUser returns true if there is no profile created for the request user.
@@ -96,8 +100,11 @@ class CreateUserProfileEngine():
                 if f.is_valid():
                     f.save()
                     self.response = f.data
+                    self.response_code = 201
                 else:
                     raise ValidationError("Error creating profile")
+                    self.response = "Error creating profile"
+                    self.response_code = 500
             else:
                 self.response = "Profile already created"
                 self.response_code = 403
@@ -120,8 +127,11 @@ class CreateUserProfileEngine():
                 if f.is_valid():
                     f.save()
                     self.response = f.data
+                    self.response_code = 201
                 else:
                     raise ValidationError("Error creating profile")
+                    self.response = "Error creating profile"
+                    self.response_code = 500
             else:
                 self.response = "Profile already created"
                 self.response_code = 403

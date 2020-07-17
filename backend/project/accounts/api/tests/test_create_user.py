@@ -1,6 +1,5 @@
 """
-Testing the create user api endpoint.The url for testing is
-/accounts/api/$version/create_user/.
+Testing the create user api endpoint.
 """
 # Other imports
 import json
@@ -33,11 +32,10 @@ class CreateUserTestCase(APITestCase):
 
     def test_A_endpoint(self):
         # Making sure the endpoint works.
-        print("\nRunning endpoint check..")
-        client = RequestsClient()
-        response = client.get(self.url)
+        print("\nRunning endpoint check.. (create_user)")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         print(f"Endpoint status {response.status_code}")
-        assert response.status_code == 200
 
     def test_B_customer_creation(self):
         # Try creating a user with standard parameters.
@@ -124,4 +122,5 @@ class CreateUserTestCase(APITestCase):
         response = self.client.post(self.url, user, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.get(username='administrator').mode, 3)
-        print(f'Created user {User.objects.get(username="administrator")}')
+        print(
+            f'Created user {User.objects.get(username="administrator")} by {authorized_user.username}')

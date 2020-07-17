@@ -59,7 +59,7 @@ class CreateUserEngine():
             # Only use uppercase names for user methods
             getattr(self, self.utype.upper())()
         except AttributeError:
-            self.response = "user_type invalid"
+            self.response = "Invalid Parameters"
             self.response_code = 400
 
     def create_user(self, params):
