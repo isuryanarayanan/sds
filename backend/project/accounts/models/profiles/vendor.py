@@ -29,8 +29,9 @@ class vendor_profile(models.Model):
     - start and end should be valid
     - interval should be converted to minutes
     """
-    timeslot = models.ForeignKey(
-        TimeSlotForVendor, on_delete=models.CASCADE, null=True)
+    # timeslot = models.ForeignKey(
+    #     TimeSlotForVendor, on_delete=models.CASCADE, null=True)
+    timeslot = models.IntegerField(default=1)
 
     class Meta:
         verbose_name = "vendor profile"
