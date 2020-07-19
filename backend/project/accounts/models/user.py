@@ -52,7 +52,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
 
     email = models.EmailField(unique=True)
-    mode = models.IntegerField(choices=user_modes, default=1)
+    mode = models.IntegerField(choices=user_modes, default=1, null=True)
 
     objects = UserManager()
 

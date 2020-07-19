@@ -21,7 +21,7 @@ class vendor_profile(models.Model):
     - start time and end time should be valid
     - date should be forward
     """
-    calendar = models.ManyToManyField(TimeSlot)
+    calendar = models.ManyToManyField(TimeSlot, blank=True)
 
     # Time slot for customers
     """
@@ -41,14 +41,14 @@ class vendor_profile(models.Model):
     def __str__(self):
         return f'{self.user.email}'
 
-    def save(self, *args, **kwargs):
-        calendar = []
+    # def save(self, *args, **kwargs):
+    #     calendar = []
 
-        for cal in self.calendar.all():
-            calendar.append(cal)
+    #     for cal in self.calendar.all():
+    #         calendar.append(cal)
 
-        resp = checkTestsForSlots(calendar)
-        if resp == True:
-            super(vendor_profile, self).save(*args, **kwargs)
-        else:
-            raise ValidationError("Error in slot")
+    #     resp = checkTestsForSlots(calendar)
+    #     if resp == True:
+    #         super(vendor_profile, self).save(*args, **kwargs)
+    #     else:
+    #         raise ValidationError("Error in slot")

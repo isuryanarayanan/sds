@@ -10,8 +10,8 @@ class customer_profile(models.Model):
     # User
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Verbal identifiers
-    first_name = models.CharField(max_length=250)
-    last_name = models.CharField(max_length=250)
+    first_name = models.CharField(max_length=250, default='')
+    last_name = models.CharField(max_length=250, default='')
 
     class Meta:
         verbose_name = "customer profile"
