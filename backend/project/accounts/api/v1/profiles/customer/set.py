@@ -14,7 +14,33 @@ class IsCustomerUser(BasePermission):
 
 
 class CustomerProfileEngine():
-    pass
+    """
+    Customer profile engine allows users to set fields in their
+    profile. Basically and endpoint for anything to do with your 
+    profile.
+    """
+
+    # The incoming request.
+    request = None
+    # The response to return to the view.
+    response = None
+    response_code = None
+
+    def __init__(self, params):
+        # Loading defaults
+        self.request = params
+        try:
+            # Load params here
+        except KeyError:
+            self.response = "Invalid Parameters"
+            self.response_code = 400
+
+        try:
+            # Only use uppercase names for user methods
+            getattr(self, self.utype.upper())()
+        except AttributeError:
+            self.response = "Invalid Parameters"
+            self.response_code = 400
 
 
 class SetCustomerProfileView(APIView):
@@ -22,7 +48,7 @@ class SetCustomerProfileView(APIView):
 
     def post(self, request):
         # Create the engine.
-        Engine = CreateUserEngine(request)
+        Engine = CustomerProfileEngine(request)
         # Respond.
         return Response(Engine.response, Engine.response_code)
 
