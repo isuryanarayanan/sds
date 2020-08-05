@@ -9,13 +9,26 @@
           <div class="su-form">
             <form>
               <div class="form-group px-3">
+                <label for="su-username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="su-username"
+                  aria-describedby="usernameHelp"
+                  placeholder="eg, JohnDoe"
+                />
+                <small id="usernameHelp" class="form-text text-muted"
+                  >Username should be unique</small
+                >
+              </div>
+              <div class="form-group px-3">
                 <label for="su-email">Email address</label>
                 <input
                   type="email"
                   class="form-control"
                   id="su-email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="eg, johndoe@gmail.com"
                 />
                 <small id="emailHelp" class="form-text text-muted"
                   >We'll never share your email with anyone else.</small
@@ -27,17 +40,12 @@
                   type="password"
                   class="form-control"
                   id="su-password1"
-                  placeholder="Password"
+                  placeholder=""
                 />
               </div>
               <div class="form-group px-3">
                 <label for="su-password2">Password Confirmation</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="su-password2"
-                  placeholder="Re-enter your password"
-                />
+                <input type="password" class="form-control" id="su-password2" />
               </div>
               <div class="p-3">
                 <div class="form-group form-check">
@@ -47,7 +55,8 @@
                     id="su-agreement"
                   />
                   <label class="form-check-label" for="su-agreement"
-                    >Check me out</label
+                    >Accept terms and conditions,
+                    <span class="text-primary">read.</span></label
                   >
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -70,7 +79,7 @@
                   class="form-control"
                   id="li-email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder=""
                 />
               </div>
               <div class="form-group px-3">
@@ -79,7 +88,7 @@
                   type="password"
                   class="form-control"
                   id="li-password1"
-                  placeholder="Password"
+                  placeholder=""
                 />
               </div>
 
