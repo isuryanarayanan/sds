@@ -13,7 +13,17 @@
     <router-view />
   </div>
 </template>
+<script>
+export default {
+  data: () => {
+    return {};
+  },
 
+  mounted: function() {
+    // this.$store.dispatch("config/FORCE_AUTHENTICATE_USER");
+  },
+};
+</script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Francois+One&display=swap");
 // font-family: 'Francois One', sans-serif;
