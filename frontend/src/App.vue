@@ -49,7 +49,9 @@ export default {
       this.$router.push("/");
     },
   },
-  mounted: function() {},
+  mounted: function() {
+    alert("app is mounted now check  permissions");
+  },
 };
 </script>
 <style lang="scss">
