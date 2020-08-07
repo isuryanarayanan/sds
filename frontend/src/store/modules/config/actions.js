@@ -1,5 +1,5 @@
 export default {
-  FORCE_AUTHENTICATE_USER: ({ commit }) => {
+  FORCE_AUTHENTICATE: ({ commit }) => {
     commit("TOGGLE_authenticated");
   },
 };

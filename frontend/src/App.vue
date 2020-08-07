@@ -3,7 +3,21 @@
     <div id="nav" class="navbar bg-light font2">
       <div class="navbar-brand">
         Social Distancing Scheduler
+        <div class="site-conf position-absolute">
+          <div
+            class="site-conf-btn btn btn-dark btn-sm"
+            @click="ToggleSiteConf()"
+          >
+            Configuration {{ confSymbol }}
+          </div>
+          <div v-if="confView" class="">
+            <div class="btn btn-primary btn-sm" @click="ForceAuthenticate()">
+              Force Authenticate
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="navbar-links">
         <router-link to="/">Home</router-link> |
         <router-link to="/get-started">Get Started</router-link> |
@@ -16,12 +30,26 @@
 <script>
 export default {
   data: () => {
-    return {};
+    return {
+      confView: false,
+      confSymbol: "+",
+    };
   },
-
-  mounted: function() {
-    // this.$store.dispatch("config/FORCE_AUTHENTICATE_USER");
+  methods: {
+    ToggleSiteConf: function() {
+      this.confView = !this.confView;
+      if (this.confView == true) {
+        this.confSymbol = "-";
+      } else {
+        this.confSymbol = "+";
+      }
+    },
+    ForceAuthenticate: function() {
+      this.$store.dispatch("config/FORCE_AUTHENTICATE");
+      this.$router.push("/");
+    },
   },
+  mounted: function() {},
 };
 </script>
 <style lang="scss">
