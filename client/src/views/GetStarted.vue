@@ -1,5 +1,5 @@
 <template>
-  <div class="get-started p-5">
+  <div class="get-started p-5 text-left">
     <div class="get-started-wrapper row">
       <div class="signup p-1 col-sm-6">
         <div class="py-3">

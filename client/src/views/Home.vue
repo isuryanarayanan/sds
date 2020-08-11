@@ -2,7 +2,9 @@
   <div class="home">
     <div class="home-wrapper">
       <div class="brand p-5 text-center">
-        <h1 class="display-1 font1">Social Distancing Scheduler</h1>
+        <h1 class="display-4 font1">
+          Contact Scheduling Can Save Your Life
+        </h1>
       </div>
       <div class="sub-brand text-center px-5">
         <p class="font2 px-5">

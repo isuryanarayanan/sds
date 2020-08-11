@@ -8,17 +8,17 @@ export default new Vuex.Store({
     authenticated: false,
   },
   getters: {
-    get_authenticated: function({ state }) {
+    get_authenticated: function(state) {
       return state.authenticated;
     },
   },
   mutations: {
-    toggle_authenticated: function({ state }) {
+    toggle_authenticated: function(state) {
       state.authenticated = !state.authenticated;
     },
   },
   actions: {
-    set_authentication_status: function({ commit }) {
+    toggle_authenticated: function(commit) {
       commit("toggle_authenticated");
     },
   },
