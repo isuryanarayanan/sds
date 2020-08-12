@@ -1,7 +1,8 @@
+/* eslint-disable */
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-
+import PermissionEngine from "../router/engine.js";
 Vue.use(VueRouter);
 
 const routes = [
@@ -17,6 +18,26 @@ const routes = [
 
     component: () => import("../views/GetStarted.vue"),
   },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    meta: {
+      requiresLogin: true,
+    },
+    children: [
+      {
+        path: "/c",
+        name: "CustomerDashboard",
+        component: () => import("../views/Dashboard.vue"),
+        meta: {
+          requiresMode: {
+            require: true,
+            mode: 1,
+          },
+        },
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
@@ -25,4 +46,7 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  PermissionEngine(to, from, next);
+});
 export default router;

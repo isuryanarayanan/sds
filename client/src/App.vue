@@ -1,24 +1,24 @@
 <template>
   <div id="app">
     <div class="navbar font2">
+      <!-- Branding -->
       <div class="navbar-brand">
         Social Distancing Scheduler
       </div>
       <div class="navbar-links">
         <!-- For the un authenticated user -->
-        <div id="nav" v-if="$store.getters['get_authenticated'] == false">
+        <div id="nav" v-if="$store.getters['user/get_authenticated'] == false">
           <router-link to="/">Home</router-link> |
           <router-link to="/get-started">Get Started</router-link>
         </div>
         <!-- For the authenticated user -->
-        <div id="nav" v-if="$store.getters['get_authenticated'] == true">
+        <div id="nav" v-if="$store.getters['user/get_authenticated'] == true">
           <router-link to="/">Home</router-link> |
           <router-link to="/profile">Profile</router-link> |
           <router-link to="/logout">Logout</router-link>
         </div>
       </div>
     </div>
-
     <!-- The router view -->
     <router-view />
   </div>
@@ -26,7 +26,7 @@
 <script>
 export default {
   mounted: function() {
-    console.log(this.$store.getters["get_authenticated"]);
+    // console.log(this.$store.getters["get_authenticated"]);
   },
 };
 </script>
