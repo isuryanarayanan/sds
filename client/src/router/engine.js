@@ -1,9 +1,11 @@
 import RequiresLogin from "./prems/RequiresLogin.js";
 
-export default (to, from, next) => {
-  var record = to.matched.some((rec) => {
-    return rec;
+export default (arg) => {
+  arg.to.matched.some((record) => {
+    if ("requiresLogin" in record.meta) {
+      RequiresLogin(arg, record);
+    }
+
+    arg.next();
   });
-  RequiresLogin(record);
-  //   RequiresMode(record);
 };

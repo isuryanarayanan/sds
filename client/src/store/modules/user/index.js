@@ -7,6 +7,9 @@ export default {
     get_authenticated: function(state) {
       return state.authenticated;
     },
+    get_mode: function(state) {
+      return state.authenticated;
+    },
   },
   mutations: {
     toggle_authenticated: function(state) {

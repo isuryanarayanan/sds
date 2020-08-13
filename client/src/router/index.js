@@ -30,6 +30,7 @@ const routes = [
         name: "CustomerDashboard",
         component: () => import("../views/Dashboard.vue"),
         meta: {
+          requiresLogin: true,
           requiresMode: {
             require: true,
             mode: 1,
@@ -47,6 +48,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  PermissionEngine(to, from, next);
+  PermissionEngine({ to, from, next });
 });
 export default router;
