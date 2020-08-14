@@ -1,13 +1,21 @@
 import store from "../../store/index.js";
 
-export default (arg, record) => {
-  if (
-    record.meta.requiresMode &&
-    store.getters["user/get_mode"] == record.meta.requiresMode
-  ) {
-    console.log("Action protected by customer");
-    arg.next("/get-started");
+export default (record) => {
+  var response = { satisfied: true, direct: null, index: 1 };
+  if ("requiresMode" in record.meta) {
+    if (
+      record.meta.requiresMode.require &&
+      store.getters["user/get_mode"] == record.meta.requiresMode.mode
+    ) {
+      response.satisfied = false;
+      response.direct = "/get-started";
+      return response;
+    } else {
+      response.satisfied = true;
+      response.direct = null;
+      return response;
+    }
   } else {
-    arg.next();
+    return response;
   }
 };
