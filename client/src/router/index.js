@@ -2,7 +2,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import PermissionEngine from "../router/engine.js";
+import store from "../store/index.js";
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,23 +21,10 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
+    component: () => import("../views/Dashboard.vue"),
     meta: {
-      requiresLogin: true,
+      requiresAuth: true,
     },
-    children: [
-      {
-        path: "/c",
-        name: "CustomerDashboard",
-        component: () => import("../views/Dashboard.vue"),
-        meta: {
-          requiresLogin: true,
-          requiresMode: {
-            require: true,
-            mode: 1,
-          },
-        },
-      },
-    ],
   },
 ];
 
@@ -46,5 +33,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters["user/get_authenticated"] != false) {
+      next();
+      return;
+    }
+    next("/get-started");
+  } else {
+    next();
+  }
+});
 export default router;

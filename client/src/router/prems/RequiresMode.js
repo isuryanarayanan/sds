@@ -8,7 +8,7 @@ export default (record) => {
       store.getters["user/get_mode"] == record.meta.requiresMode.mode
     ) {
       response.satisfied = false;
-      response.direct = "/get-started";
+      response.direct = "/get-farted";
       return response;
     } else {
       response.satisfied = true;
