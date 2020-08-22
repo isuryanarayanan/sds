@@ -13,7 +13,7 @@
         </div>
         <!-- For the authenticated user -->
         <div id="nav" v-if="$store.getters['user/get_authenticated'] == true">
-          <router-link to="/">Home</router-link> |
+          <router-link to="/dashboard">Dashboard</router-link> |
           <router-link to="/profile">Profile</router-link> |
           <router-link to="/logout">Logout</router-link>
         </div>
@@ -27,6 +27,11 @@
 export default {
   mounted: function() {
     this.$store.dispatch("load");
+    if (this.$store.getters["user/get_authenticated"]) {
+      this.$router.push({ name: "Dashboard" });
+    } else {
+      console.log("unauthenticated");
+    }
   },
 };
 </script>

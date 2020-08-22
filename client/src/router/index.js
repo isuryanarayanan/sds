@@ -10,13 +10,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    beforeEnter: (to, from, next) => {
-      if (store.getters["user/get_authenticated"] == false) {
-        next();
-      } else {
-        next({ name: "Dashboard" });
-      }
-    },
   },
 
   {
