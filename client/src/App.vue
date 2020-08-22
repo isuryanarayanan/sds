@@ -26,7 +26,7 @@
 <script>
 export default {
   mounted: function() {
-    // console.log(this.$store.getters["get_authenticated"]);
+    this.$store.dispatch("load");
   },
 };
 </script>
