@@ -48,6 +48,27 @@ export default {
     },
   },
   actions: {
+    GET_JWT_TOKEN: function({ rootGetters }, PAYLOAD) {
+      let xhr = new XMLHttpRequest();
+
+      let promise = new Promise((resolve, reject) => {
+        xhr.open(
+          "POST",
+          rootGetters.endpoints("BASE") + rootGetters.endpoints("GET_TOKEN")
+        );
+        xhr.setRequestHeader("Content-Type", "Application/json");
+        xhr.onload = () => {
+          resolve(xhr);
+        };
+        xhr.onerror = () => {
+          reject(xhr);
+        };
+        xhr.send(JSON.stringify(PAYLOAD));
+      });
+
+      return promise;
+    },
+
     toggle_authenticated: function(commit) {
       commit("toggle_authenticated");
     },
