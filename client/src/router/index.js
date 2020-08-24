@@ -33,7 +33,35 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+function runLoad() {
+  let locallyStoredAccessToken = localStorage.getItem("ACCTOKEN");
+  let locallyStoredRefreshToken = localStorage.getItem("REFTOKEN");
+  let TokenVerification = store.dispatch(
+    "user/VALIDATE_TOKEN",
+    locallyStoredAccessToken
+  );
+
+  TokenVerification.then((data) => {
+    if (data.status == 200) {
+      store.commit("user/set_authenticated", true);
+    } else {
+      let TokenRefresh = store.dispatch("user/REFRESH_TOKEN", {
+        ACC: locallyStoredAccessToken,
+        REF: locallyStoredRefreshToken,
+      });
+      TokenRefresh.then((refresh) => {
+        if (refresh.status == 200) {
+          console.log("refresh succesfull");
+        }
+      });
+      store.commit("user/set_authenticated", false);
+    }
+  });
+}
+
 router.beforeEach((to, from, next) => {
+  runLoad();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (store.getters["user/get_authenticated"] != false) {
       next();

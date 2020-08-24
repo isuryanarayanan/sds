@@ -1,3 +1,15 @@
-from django.shortcuts import render
+# Native imports
+import json
+# Rest framework imports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.decorators import permission_classes
 
-# Create your views here.
+
+class TokenValidateView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        return Response(str(self.request.META['REMOTE_ADDR']))

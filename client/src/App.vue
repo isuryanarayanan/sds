@@ -24,16 +24,7 @@
   </div>
 </template>
 <script>
-export default {
-  mounted: function() {
-    this.$store.dispatch("load");
-    if (this.$store.getters["user/get_authenticated"]) {
-      this.$router.push({ name: "Dashboard" });
-    } else {
-      console.log("unauthenticated");
-    }
-  },
-};
+export default {};
 </script>
 
 <style lang="scss">

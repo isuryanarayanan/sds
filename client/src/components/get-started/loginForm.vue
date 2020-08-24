@@ -33,7 +33,7 @@
             >Keep me signed in</label
           >
         </div>
-        <button class="btn btn-primary" @click="Submit()">
+        <button class="btn btn-primary" @click="SubmitApi()">
           Submit
         </button>
       </div>
@@ -50,6 +50,13 @@ export default {
     };
   },
   methods: {
+    SubmitApi: function() {
+      this.$store.dispatch("user/GET_JWT_TOKEN", {
+        username: this.email,
+        password: this.password,
+      });
+      this.$router.replace("/");
+    },
     Submit: function() {
       this.$store.dispatch("user/get_token", {
         email: this.email,
