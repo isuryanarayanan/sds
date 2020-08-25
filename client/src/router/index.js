@@ -15,7 +15,6 @@ const routes = [
   {
     path: "/get-started",
     name: "GetStarted",
-
     component: () => import("../views/GetStarted.vue"),
   },
   {
@@ -40,8 +39,12 @@ function runLoad() {
       store.commit("user/set_authenticated", true);
     } else {
       store.dispatch("user/REFRESH_TOKEN").then((refresh) => {
+        console.log(refresh.response);
         if (refresh.status == 200) {
-          console.log("refresh succesfull");
+          store.commit(
+            "user/set_accessToken",
+            JSON.parse(refresh.response).access
+          );
         }
       });
       store.commit("user/set_authenticated", false);

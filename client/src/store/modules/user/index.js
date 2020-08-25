@@ -78,8 +78,8 @@ export default {
       let xhr = new XMLHttpRequest();
       let promise = new Promise((resolve, reject) => {
         xhr.open(
-          "GET",
-          rootGetters.endpoints("BASE") + rootGetters.endpoints("REF _TOKEN")
+          "POST",
+          rootGetters.endpoints("BASE") + rootGetters.endpoints("REF_TOKEN")
         );
         xhr.setRequestHeader("Content-Type", "Application/json");
         xhr.setRequestHeader(
@@ -92,8 +92,9 @@ export default {
         xhr.onerror = () => {
           reject(xhr);
         };
-        xhr.send();
+        xhr.send(JSON.stringify({ refresh: getters["get_refreshToken"] }));
       });
+
       return promise;
     },
   },
