@@ -52,8 +52,7 @@ export default {
       });
       return promise;
     },
-    VALIDATE_TOKEN: function({ rootGetters }, PAYLOAD) {
-      console.log("JWT " + PAYLOAD);
+    VALIDATE_TOKEN: function({ rootGetters, getters }) {
       let xhr = new XMLHttpRequest();
       let promise = new Promise((resolve, reject) => {
         xhr.open(
@@ -61,7 +60,10 @@ export default {
           rootGetters.endpoints("BASE") + rootGetters.endpoints("VAL_TOKEN")
         );
         xhr.setRequestHeader("Content-Type", "Application/json");
-        xhr.setRequestHeader("Authorization", "Bearer " + PAYLOAD);
+        xhr.setRequestHeader(
+          "Authorization",
+          "Bearer " + getters["get_accessToken"]
+        );
         xhr.onload = () => {
           resolve(xhr);
         };
@@ -72,8 +74,7 @@ export default {
       });
       return promise;
     },
-    REFRESH_TOKEN: function({ rootGetters }, PAYLOAD) {
-      console.log("JWT " + PAYLOAD);
+    REFRESH_TOKEN: function({ rootGetters, getters }) {
       let xhr = new XMLHttpRequest();
       let promise = new Promise((resolve, reject) => {
         xhr.open(
@@ -81,7 +82,10 @@ export default {
           rootGetters.endpoints("BASE") + rootGetters.endpoints("REF _TOKEN")
         );
         xhr.setRequestHeader("Content-Type", "Application/json");
-        xhr.setRequestHeader("Authorization", "Bearer " + PAYLOAD);
+        xhr.setRequestHeader(
+          "Authorization",
+          "Bearer " + getters["get_accessToken"]
+        );
         xhr.onload = () => {
           resolve(xhr);
         };

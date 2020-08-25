@@ -35,22 +35,11 @@ const router = new VueRouter({
 });
 
 function runLoad() {
-  let locallyStoredAccessToken = localStorage.getItem("ACCTOKEN");
-  let locallyStoredRefreshToken = localStorage.getItem("REFTOKEN");
-  let TokenVerification = store.dispatch(
-    "user/VALIDATE_TOKEN",
-    locallyStoredAccessToken
-  );
-
-  TokenVerification.then((data) => {
+  store.dispatch("user/VALIDATE_TOKEN").then((data) => {
     if (data.status == 200) {
       store.commit("user/set_authenticated", true);
     } else {
-      let TokenRefresh = store.dispatch("user/REFRESH_TOKEN", {
-        ACC: locallyStoredAccessToken,
-        REF: locallyStoredRefreshToken,
-      });
-      TokenRefresh.then((refresh) => {
+      store.dispatch("user/REFRESH_TOKEN").then((refresh) => {
         if (refresh.status == 200) {
           console.log("refresh succesfull");
         }
