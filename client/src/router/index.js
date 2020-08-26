@@ -54,14 +54,5 @@ function runLoad() {
 
 router.beforeEach((to, from, next) => {
   runLoad();
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters["user/get_authenticated"] != false) {
-      next();
-      return;
-    }
-    next("/get-started");
-  } else {
-    next();
-  }
 });
 export default router;
