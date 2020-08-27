@@ -5,8 +5,15 @@ import router from "./router";
 import store from "./store";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 Vue.config.productionTip = false;
+Vue.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true,
+});
 
 new Vue({
   router,

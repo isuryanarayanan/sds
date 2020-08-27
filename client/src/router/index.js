@@ -5,17 +5,18 @@ import Home from "../views/Home.vue";
 import store from "../store/index.js";
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/",
     name: "Home",
     component: Home,
-    beforeEnter:function(to,from,next){
-      if(store.getters['user/get_authenticated']){
-        next({name:"Dashboard"})
+    beforeEnter: function(to, from, next) {
+      if (store.getters["user/get_authenticated"]) {
+        next({ name: "Dashboard" });
       } else {
-        next()
+        next();
       }
-    }
+    },
   },
 
   {
@@ -59,20 +60,15 @@ function runLoad() {
             resolve();
           }
         });
-
       }
     });
-    
   });
   return promise;
-
 }
 
 router.beforeEach((to, from, next) => {
-
   runLoad().then(() => {
-    next()
+    next();
   });
-
 });
 export default router;

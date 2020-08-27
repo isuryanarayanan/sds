@@ -4,11 +4,6 @@
       Login to an existing account
     </div>
     <div class="li-form">
-      <ul class="form-errors" v-for="error in formErrors" v-bind:key="error.id">
-        <li>
-          <small class="form-text text-muted"></small>
-        </li>
-      </ul>
       <div class="form-group px-3">
         <label for="li-email">Email address</label>
         <input
@@ -53,10 +48,25 @@ export default {
     return {
       email: "",
       password: "",
-      formErrors: [],
     };
   },
   methods: {
+    Toast: function(toastMessage) {
+      this.$toast(toastMessage, {
+        position: "bottom-right",
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+        rtl: false,
+      });
+    },
     Login: function() {
       this.$store
         .dispatch("user/GET_JWT_TOKEN", {
@@ -65,7 +75,7 @@ export default {
         })
         .then((result) => {
           let response = JSON.parse(result.response);
-          console.log(response);
+          this.Toast(JSON.stringify(response));
         });
     },
     SubmitApi: function() {
