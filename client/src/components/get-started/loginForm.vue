@@ -4,6 +4,11 @@
       Login to an existing account
     </div>
     <div class="li-form">
+      <ul class="form-errors" v-for="error in formErrors" v-bind:key="error.id">
+        <li>
+          <small class="form-text text-muted"></small>
+        </li>
+      </ul>
       <div class="form-group px-3">
         <label for="li-email">Email address</label>
         <input
@@ -33,7 +38,8 @@
             >Keep me signed in</label
           >
         </div>
-        <button class="btn btn-primary" @click="SubmitApi()">
+
+        <button class="btn btn-primary" @click="Login()">
           Submit
         </button>
       </div>
@@ -47,22 +53,27 @@ export default {
     return {
       email: "",
       password: "",
+      formErrors: [],
     };
   },
   methods: {
+    Login: function() {
+      this.$store
+        .dispatch("user/GET_JWT_TOKEN", {
+          username: this.email,
+          password: this.password,
+        })
+        .then((result) => {
+          let response = JSON.parse(result.response);
+          console.log(response);
+        });
+    },
     SubmitApi: function() {
       this.$store.dispatch("user/GET_JWT_TOKEN", {
         username: this.email,
         password: this.password,
       });
       this.$router.replace("/");
-    },
-    Submit: function() {
-      this.$store.dispatch("user/get_token", {
-        email: this.email,
-        password: this.password,
-      });
-      this.$router.replace("/dashboard");
     },
   },
 };
