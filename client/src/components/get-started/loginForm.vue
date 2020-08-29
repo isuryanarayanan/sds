@@ -51,22 +51,6 @@ export default {
     };
   },
   methods: {
-    Toast: function(toastMessage) {
-      this.$toast(toastMessage, {
-        position: "bottom-right",
-        timeout: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: "button",
-        icon: true,
-        rtl: false,
-      });
-    },
     Login: function() {
       this.$store
         .dispatch("user/GET_JWT_TOKEN", {
@@ -75,7 +59,7 @@ export default {
         })
         .then((result) => {
           let response = JSON.parse(result.response);
-          this.Toast(JSON.stringify(response));
+          this.globalToast(JSON.stringify(response));
         });
     },
     SubmitApi: function() {
