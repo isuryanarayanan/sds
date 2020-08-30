@@ -23,13 +23,24 @@ const routes = [
     path: "/get-started",
     name: "GetStarted",
     component: () => import("../views/GetStarted.vue"),
+    beforeEnter: function(to, from, next) {
+      if (store.getters["user/get_authenticated"]) {
+        next({ name: "Dashboard" });
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: () => import("../views/Dashboard.vue"),
-    meta: {
-      requiresAuth: true,
+    beforeEnter: function(to, from, next) {
+      if (store.getters["user/get_authenticated"]) {
+        next();
+      } else {
+        next({ name: "GetStarted" });
+      }
     },
   },
 ];

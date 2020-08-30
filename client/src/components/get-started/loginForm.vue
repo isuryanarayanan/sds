@@ -48,9 +48,27 @@ export default {
     return {
       email: "",
       password: "",
+      response: null,
+      status: null,
+      errors: [],
     };
   },
   methods: {
+    handleLoginErrors: function() {
+      if (this.response.username) {
+        this.response.username.forEach((element) => {
+          this.globalToast("username : " + element);
+        });
+      }
+      if (this.response.password) {
+        this.response.password.forEach((element) => {
+          this.globalToast("password : " + element);
+        });
+      }
+      if (this.response.detail) {
+        this.globalToast(this.response.detail);
+      }
+    },
     Login: function() {
       this.$store
         .dispatch("user/GET_JWT_TOKEN", {
@@ -58,8 +76,13 @@ export default {
           password: this.password,
         })
         .then((result) => {
-          let response = JSON.parse(result.response);
-          this.globalToast(JSON.stringify(response));
+          this.response = JSON.parse(result.response);
+          this.status = JSON.parse(result.status);
+          if (this.status == 200) {
+            this.globalToast("authenticated");
+          } else {
+            this.handleLoginErrors();
+          }
         });
     },
     SubmitApi: function() {
