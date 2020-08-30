@@ -64,7 +64,7 @@ class CreateUserEngine():
 
     def create_user(self, params):
         """
-        Creates a user throught the custome user creation 
+        Creates a user throught the custom user creation 
         form the parameters are passed through the parent 
         function.
         """

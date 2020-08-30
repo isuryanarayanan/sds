@@ -1,3 +1,7 @@
+import GET_JWT_TOKEN from "../user/actions/GET_JWT_TOKEN.js";
+import VALIDATE_TOKEN from "../user/actions/VALIDATE_TOKEN.js";
+import REFRESH_TOKEN from "../user/actions/REFRESH_TOKEN.js";
+import REGISTER_USER from "../user/actions/REGISTER_USER.js";
 export default {
   namespaced: true,
   state: {
@@ -30,72 +34,9 @@ export default {
     },
   },
   actions: {
-    GET_JWT_TOKEN: function({ rootGetters, commit }, PAYLOAD) {
-      let xhr = new XMLHttpRequest();
-      let promise = new Promise((resolve, reject) => {
-        xhr.open(
-          "POST",
-          rootGetters.endpoints("BASE") + rootGetters.endpoints("GET_TOKEN")
-        );
-        xhr.setRequestHeader("Content-Type", "Application/json");
-        xhr.onload = () => {
-          resolve(xhr);
-        };
-        xhr.onerror = () => {
-          reject(xhr);
-        };
-        xhr.send(JSON.stringify(PAYLOAD));
-      });
-      promise.then((data) => {
-        commit("set_accessToken", JSON.parse(data.response).access);
-        commit("set_refreshToken", JSON.parse(data.response).refresh);
-      });
-      return promise;
-    },
-    VALIDATE_TOKEN: function({ rootGetters, getters }) {
-      let xhr = new XMLHttpRequest();
-      let promise = new Promise((resolve, reject) => {
-        xhr.open(
-          "GET",
-          rootGetters.endpoints("BASE") + rootGetters.endpoints("VAL_TOKEN")
-        );
-        xhr.setRequestHeader("Content-Type", "Application/json");
-        xhr.setRequestHeader(
-          "Authorization",
-          "Bearer " + getters["get_accessToken"]
-        );
-        xhr.onload = () => {
-          resolve(xhr);
-        };
-        xhr.onerror = () => {
-          reject(xhr);
-        };
-        xhr.send();
-      });
-      return promise;
-    },
-    REFRESH_TOKEN: function({ rootGetters, getters }) {
-      let xhr = new XMLHttpRequest();
-      let promise = new Promise((resolve, reject) => {
-        xhr.open(
-          "POST",
-          rootGetters.endpoints("BASE") + rootGetters.endpoints("REF_TOKEN")
-        );
-        xhr.setRequestHeader("Content-Type", "Application/json");
-        xhr.setRequestHeader(
-          "Authorization",
-          "Bearer " + getters["get_accessToken"]
-        );
-        xhr.onload = () => {
-          resolve(xhr);
-        };
-        xhr.onerror = () => {
-          reject(xhr);
-        };
-        xhr.send(JSON.stringify({ refresh: getters["get_refreshToken"] }));
-      });
-
-      return promise;
-    },
+    GET_JWT_TOKEN,
+    VALIDATE_TOKEN,
+    REFRESH_TOKEN,
+    REGISTER_USER,
   },
 };

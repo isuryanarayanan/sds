@@ -96,12 +96,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.login {
-  :hover .li-brand {
-    color: #42b983;
-  }
-}
-
 .li-brand {
   font-size: 32px;
   color: #2c3e50;

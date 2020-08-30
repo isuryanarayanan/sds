@@ -14,6 +14,8 @@ export default new Vuex.Store({
       VAL_TOKEN: "accounts/api/token/validate/", // endpoint to validate the active access token
       /* authorization endpoints */
       GET_USER: "accounts/api/authorization/user/", //endpoint to get user details
+      /* create user */
+      REG_USER: "accounts/api/v1/create_user/",
     },
   },
   getters: {
