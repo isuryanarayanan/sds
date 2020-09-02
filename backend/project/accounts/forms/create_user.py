@@ -4,7 +4,7 @@ from accounts.models.user import User
 from django import forms
 
 
-class CustomerUserCreationForm(forms.Form):
+class CustomUserCreationForm(forms.Form):
     """
     Creates the user with the mode and email as the
     additional form.

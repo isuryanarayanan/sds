@@ -99,14 +99,14 @@ export default {
     signup: function() {
       this.$store
         .dispatch("user/REGISTER_USER", {
-          user_type: "CUSTOMER",
+          user_type: "customer",
           username: this.username,
           email: this.email,
           password1: this.password1,
           password2: this.password2,
         })
         .then((result) => {
-          console.log(result.response);
+          this.globalToast(result.response);
         });
     },
   },

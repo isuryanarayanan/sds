@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.decorators import permission_classes
 # Importing user creation form
-from accounts.forms.create_user import CustomerUserCreationForm
+from accounts.forms.create_user import CustomUserCreationForm
 
 
 class IsAuthorizedToCreateAdministrator(BasePermission):
@@ -68,10 +68,10 @@ class CreateUserEngine():
         form the parameters are passed through the parent 
         function.
         """
-        f = CustomerUserCreationForm(data=params)
+        f = CustomUserCreationForm(data=params)
         if f.is_valid():
             self.user = f.save()
-            self.response = str(self.user) + "created"
+            self.response = str(self.user) + " created, You can login now."
             self.response_code = 201
         else:
             self.response = str(f.errors)
@@ -95,6 +95,9 @@ class CreateUserEngine():
                 "password2": self.password2
             }
             self.create_user(param)
+        else:
+            self.response = "Invalid Parameters"
+            self.response_code = 400
 
     def VENDOR(self):
         """
@@ -113,6 +116,9 @@ class CreateUserEngine():
                 "password2": self.password2
             }
             self.create_user(param)
+        else:
+            self.response = "Invalid Parameters"
+            self.response_code = 400
 
     def checkPerm(self):
         """
