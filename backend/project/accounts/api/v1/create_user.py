@@ -84,6 +84,7 @@ class CreateUserEngine():
         be created if the profile_data is provided in the
         request.
         """
+
         if self.username and self.email and self.password1 and self.password2:
             # Create user
             param = {

@@ -106,7 +106,7 @@ export default {
           password2: this.password2,
         })
         .then((result) => {
-          console.log(result);
+          console.log(result.response);
         });
     },
   },
