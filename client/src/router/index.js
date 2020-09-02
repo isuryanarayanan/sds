@@ -51,12 +51,29 @@ const router = new VueRouter({
   routes,
 });
 
+function loadUser() {
+  return new Promise((resolve, reject) => {
+    console.log("user is being loaded from server");
+    resolve();
+  });
+}
+
 function runLoad() {
   let promise = new Promise((resolve, reject) => {
     store.dispatch("user/VALIDATE_TOKEN").then((data) => {
       if (data.status == 200) {
         store.commit("user/set_authenticated", true);
-        resolve();
+        new Promise((resolvex, rejectx) => {
+          if (!store.getters["user/get_if_user_loaded"]) {
+            loadUser().then(() => {
+              resolvex();
+            });
+          } else {
+            resolvex();
+          }
+        }).then(() => {
+          resolve();
+        });
       } else {
         store.dispatch("user/REFRESH_TOKEN").then((refresh) => {
           if (refresh.status == 200) {
@@ -75,6 +92,13 @@ function runLoad() {
     });
   });
   return promise;
+}
+
+function checkUserLoad() {
+  let promise = new Promise((resolve, reject) => {
+    if (!store.getters["user/get_if_user_loaded"]) {
+    }
+  });
 }
 
 router.beforeEach((to, from, next) => {

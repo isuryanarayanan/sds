@@ -8,6 +8,11 @@ export default {
     accessToken: localStorage.getItem("ACCTOKEN"),
     refreshToken: localStorage.getItem("REFTOKEN"),
     authenticated: false,
+    user: {
+      loaded: true,
+      username: null,
+      email: null,
+    },
   },
   getters: {
     get_authenticated: function(state) {
@@ -18,6 +23,9 @@ export default {
     },
     get_refreshToken: function(state) {
       return state.refreshToken;
+    },
+    get_if_user_loaded: function(state) {
+      return state.user.loaded;
     },
   },
   mutations: {
