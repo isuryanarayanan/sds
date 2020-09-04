@@ -53,8 +53,9 @@ const router = new VueRouter({
 
 function loadUser() {
   return new Promise((resolve, reject) => {
-    console.log("user is being loaded from server");
-    resolve();
+    store.dispatch("user/GET_USER").then((data) => {
+      resolve();
+    });
   });
 }
 

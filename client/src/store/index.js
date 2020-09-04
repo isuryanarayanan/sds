@@ -13,7 +13,7 @@ export default new Vuex.Store({
       REF_TOKEN: "accounts/api/token/refresh/", // endpoint to refresh the active access token
       VAL_TOKEN: "accounts/api/token/validate/", // endpoint to validate the active access token
       /* authorization endpoints */
-      GET_USER: "accounts/api/authorization/user/", //endpoint to get user details
+      GET_USER: "accounts/api/v1/get_user/", //endpoint to get user details
       /* create user */
       REG_USER: "accounts/api/v1/create_user/",
     },

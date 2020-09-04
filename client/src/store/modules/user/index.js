@@ -2,6 +2,7 @@ import GET_JWT_TOKEN from "../user/actions/GET_JWT_TOKEN.js";
 import VALIDATE_TOKEN from "../user/actions/VALIDATE_TOKEN.js";
 import REFRESH_TOKEN from "../user/actions/REFRESH_TOKEN.js";
 import REGISTER_USER from "../user/actions/REGISTER_USER.js";
+import GET_USER from "../user/actions/GET_USER.js";
 export default {
   namespaced: true,
   state: {
@@ -9,7 +10,7 @@ export default {
     refreshToken: localStorage.getItem("REFTOKEN"),
     authenticated: false,
     user: {
-      loaded: true,
+      loaded: false,
       username: null,
       email: null,
     },
@@ -29,6 +30,9 @@ export default {
     },
   },
   mutations: {
+    set_user_if_loaded: function(state, st) {
+      state.user.loaded = st;
+    },
     set_authenticated: function(state, st) {
       state.authenticated = st;
     },
@@ -46,5 +50,6 @@ export default {
     VALIDATE_TOKEN,
     REFRESH_TOKEN,
     REGISTER_USER,
+    GET_USER,
   },
 };
