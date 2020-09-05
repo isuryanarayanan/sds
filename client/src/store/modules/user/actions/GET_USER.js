@@ -1,4 +1,4 @@
-export default function({ rootGetters, commit, getters }, PAYLOAD) {
+export default function({ rootGetters, getters }, PAYLOAD) {
   let xhr = new XMLHttpRequest();
   let promise = new Promise((resolve, reject) => {
     xhr.open(
@@ -18,13 +18,6 @@ export default function({ rootGetters, commit, getters }, PAYLOAD) {
     };
     xhr.send(JSON.stringify(PAYLOAD));
   });
-  promise.then((data) => {
-    console.log(data.response);
-    if (data.status == 200) {
-      commit("set_user_if_loaded", true);
-    } else {
-      commit("set_user_if_loaded", false);
-    }
-  });
+
   return promise;
 }

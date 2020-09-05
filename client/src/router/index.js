@@ -43,6 +43,18 @@ const routes = [
       }
     },
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/Home.vue"),
+    beforeEnter: function(to, from, next) {
+      if (store.getters["user/get_authenticated"]) {
+        next();
+      } else {
+        next({ name: "GetStarted" });
+      }
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -54,7 +66,18 @@ const router = new VueRouter({
 function loadUser() {
   return new Promise((resolve, reject) => {
     store.dispatch("user/GET_USER").then((data) => {
-      resolve();
+      if (data.status == 200) {
+        store.commit("user/set_user_if_loaded", {
+          loaded: true,
+          _EMAIL: JSON.parse(data.response)._EMAIL,
+          _USERNAME: JSON.parse(data.response)._USERNAME,
+          _ID: JSON.parse(data.response)._ID,
+        });
+        resolve();
+      } else {
+        store.commit("user/set_user_if_loaded", false);
+        resolve();
+      }
     });
   });
 }

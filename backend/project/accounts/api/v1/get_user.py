@@ -13,27 +13,27 @@ class GetUserEngine():
     # The response to return to the view.
     response = None
     response_code = None
+    user = None
 
     def __init__(self, params):
         # Loading defaults
         self.request = params
         try:
             # self.utype = json.loads(params.body)['user_id']
-            print(params.user)
+            self.user = {
+                "_ID": params.user.id,
+                "_USERNAME": params.user.username,
+                "_EMAIL": params.user.email
+            }
+            self.response = self.user
+            self.response_code = 200
         except KeyError:
-            self.response = "Invalid Parameters"
-            self.response_code = 400
-
-        try:
-            # Only use uppercase names for user methods
-            getattr(self, self.utype.upper())()
-        except AttributeError:
             self.response = "Invalid Parameters"
             self.response_code = 400
 
 
 class GetUserView(APIView):
-    permission_classes = ()
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         # Create the engine.

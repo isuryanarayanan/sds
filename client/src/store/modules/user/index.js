@@ -11,8 +11,9 @@ export default {
     authenticated: false,
     user: {
       loaded: false,
-      username: null,
-      email: null,
+      _ID: null,
+      _USERNAME: null,
+      _EMAIL: null,
     },
   },
   getters: {
@@ -28,11 +29,11 @@ export default {
     get_if_user_loaded: function(state) {
       return state.user.loaded;
     },
+    get_user: function(state) {
+      return state.user;
+    },
   },
   mutations: {
-    set_user_if_loaded: function(state, st) {
-      state.user.loaded = st;
-    },
     set_authenticated: function(state, st) {
       state.authenticated = st;
     },
@@ -43,6 +44,12 @@ export default {
     set_refreshToken: function(state, token) {
       state.refreshToken = token;
       localStorage.setItem("REFTOKEN", token);
+    },
+    set_user_if_loaded: function(state, st) {
+      state.user.loaded = st.loaded;
+      state.user._EMAIL = st._EMAIL;
+      state.user._USERNAME = st._USERNAME;
+      state.user._ID = st._ID;
     },
   },
   actions: {
