@@ -80,17 +80,11 @@ export default {
           this.status = JSON.parse(result.status);
           if (this.status == 200) {
             this.globalToast("authenticated");
+            this.$router.replace("/");
           } else {
             this.handleLoginErrors();
           }
         });
-    },
-    SubmitApi: function() {
-      this.$store.dispatch("user/GET_JWT_TOKEN", {
-        username: this.email,
-        password: this.password,
-      });
-      this.$router.replace("/");
     },
   },
 };
