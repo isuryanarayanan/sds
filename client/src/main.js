@@ -7,13 +7,14 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
   maxToasts: 20,
-  newestOnTop: true,
+  newestOnTop: true
 });
 
 Vue.mixin({
@@ -31,14 +32,15 @@ Vue.mixin({
         hideProgressBar: true,
         closeButton: "button",
         icon: true,
-        rtl: false,
+        rtl: false
       });
-    },
-  },
+    }
+  }
 });
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount("#app");

@@ -1,6 +1,6 @@
 import store from "../../store/index.js";
 
-export default (record) => {
+export default record => {
   var response = { satisfied: true, direct: null, index: 0 };
   if ("requiresLogin" in record.meta) {
     if (

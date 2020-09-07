@@ -16,6 +16,6 @@ import RegisterForm from "../components/get-started/registerForm.vue";
 import LoginForm from "../components/get-started/loginForm.vue";
 export default {
   name: "GetStarted",
-  components: { LoginForm, RegisterForm },
+  components: { LoginForm, RegisterForm }
 };
 </script>

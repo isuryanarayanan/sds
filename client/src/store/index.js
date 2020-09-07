@@ -15,17 +15,17 @@ export default new Vuex.Store({
       /* authorization endpoints */
       GET_USER: "accounts/api/v1/get_user/", //endpoint to get user details
       /* create user */
-      REG_USER: "accounts/api/v1/create_user/",
-    },
+      REG_USER: "accounts/api/v1/create_user/"
+    }
   },
   getters: {
-    endpoints: (state) => {
-      return (key) => {
+    endpoints: state => {
+      return key => {
         return state.endpoints[key];
       };
-    },
+    }
   },
   mutations: {},
   actions: {},
-  modules: { user },
+  modules: { user }
 });

@@ -14,7 +14,7 @@ export default function({ rootGetters, commit }, PAYLOAD) {
     };
     xhr.send(JSON.stringify(PAYLOAD));
   });
-  promise.then((data) => {
+  promise.then(data => {
     commit("set_accessToken", JSON.parse(data.response).access);
     commit("set_refreshToken", JSON.parse(data.response).refresh);
   });

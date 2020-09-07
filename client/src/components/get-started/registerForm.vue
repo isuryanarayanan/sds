@@ -92,7 +92,7 @@ export default {
       username: null,
       email: null,
       password1: null,
-      password2: null,
+      password2: null
     };
   },
   methods: {
@@ -103,13 +103,13 @@ export default {
           username: this.username,
           email: this.email,
           password1: this.password1,
-          password2: this.password2,
+          password2: this.password2
         })
-        .then((result) => {
+        .then(result => {
           this.globalToast(result.response);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

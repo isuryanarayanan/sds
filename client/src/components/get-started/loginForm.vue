@@ -50,18 +50,18 @@ export default {
       password: "",
       response: null,
       status: null,
-      errors: [],
+      errors: []
     };
   },
   methods: {
     handleLoginErrors: function() {
       if (this.response.username) {
-        this.response.username.forEach((element) => {
+        this.response.username.forEach(element => {
           this.globalToast("username : " + element);
         });
       }
       if (this.response.password) {
-        this.response.password.forEach((element) => {
+        this.response.password.forEach(element => {
           this.globalToast("password : " + element);
         });
       }
@@ -73,9 +73,9 @@ export default {
       this.$store
         .dispatch("user/GET_JWT_TOKEN", {
           username: this.email,
-          password: this.password,
+          password: this.password
         })
-        .then((result) => {
+        .then(result => {
           this.response = JSON.parse(result.response);
           this.status = JSON.parse(result.status);
           if (this.status == 200) {
@@ -85,8 +85,8 @@ export default {
             this.handleLoginErrors();
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

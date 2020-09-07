@@ -13,8 +13,8 @@ export default {
       loaded: false,
       _ID: null,
       _USERNAME: null,
-      _EMAIL: null,
-    },
+      _EMAIL: null
+    }
   },
   getters: {
     get_authenticated: function(state) {
@@ -31,7 +31,7 @@ export default {
     },
     get_user: function(state) {
       return state.user;
-    },
+    }
   },
   mutations: {
     set_authenticated: function(state, st) {
@@ -50,13 +50,13 @@ export default {
       state.user._EMAIL = st._EMAIL;
       state.user._USERNAME = st._USERNAME;
       state.user._ID = st._ID;
-    },
+    }
   },
   actions: {
     GET_JWT_TOKEN,
     VALIDATE_TOKEN,
     REFRESH_TOKEN,
     REGISTER_USER,
-    GET_USER,
-  },
+    GET_USER
+  }
 };
