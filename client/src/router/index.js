@@ -46,7 +46,7 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    component: () => import("../views/Home.vue"),
+    component: () => import("../views/Profile.vue"),
     beforeEnter: function(to, from, next) {
       if (store.getters["user/get_authenticated"]) {
         next();
