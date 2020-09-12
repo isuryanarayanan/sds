@@ -23,7 +23,7 @@
     <!-- Navigation bar -->
     <!-- Router view -->
     <v-main>
-      <router-view></router-view>
+      <router-view />
     </v-main>
     <!-- Router view -->
   </v-app>
