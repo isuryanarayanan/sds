@@ -16,10 +16,11 @@
             incidunt error saepe nostrum quaerat minima laborum, eius aliquam
             eos corrupti! Deleniti quae perferendis quis officia at quia.
           </p>
-          <v-btn class="primary" small @click="OpenForm()"
+          <v-btn class="primary" small @click="OpenForm()" v-if="!showForm"
             >Edit your profile</v-btn
           >
         </v-col>
+        <v-btn dark small @click="CloseForm()" v-if="showForm">Go Back</v-btn>
         <v-col v-if="showForm">
           <ProfileForm />
         </v-col>
