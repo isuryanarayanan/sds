@@ -6,8 +6,6 @@
     </div>
     <v-tabs dark>
       <v-tab>Scheduler</v-tab>
-      <v-tab>Meetings</v-tab>
-      <v-tab>Track</v-tab>
     </v-tabs>
     <v-tabs-items>
       <v-tab-item>
