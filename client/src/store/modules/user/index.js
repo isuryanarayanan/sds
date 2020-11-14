@@ -3,6 +3,7 @@ import VALIDATE_TOKEN from "../user/actions/VALIDATE_TOKEN.js";
 import REFRESH_TOKEN from "../user/actions/REFRESH_TOKEN.js";
 import REGISTER_USER from "../user/actions/REGISTER_USER.js";
 import GET_USER from "../user/actions/GET_USER.js";
+
 export default {
   namespaced: true,
   state: {

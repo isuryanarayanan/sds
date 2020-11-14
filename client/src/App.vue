@@ -15,7 +15,6 @@
         <!-- For the authenticated user -->
         <div id="nav" v-if="$store.getters['user/get_authenticated'] == true">
           <router-link class="px-2" to="/dashboard">Dashboard</router-link> |
-          <router-link class="px-2" to="/profile">Profile</router-link> |
           <router-link class="px-2" to="/logout">Logout</router-link>
         </div>
       </div>

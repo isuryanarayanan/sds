@@ -13,6 +13,7 @@ For example, imagine you have to go to the bank. You're account needs to be free
 So in the scenario the event is you going to the bank and obviously you become the customer in this system, the bank will be the vendor.
 
 You can pick a time slot from the vendor page and make sure there is only a certain number of people there at the time.
+        print("running")
 
 ## Designing a user system
 

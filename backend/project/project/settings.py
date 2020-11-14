@@ -25,7 +25,8 @@ INSTALLED_APPS = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8080",
     "http://127.0.0.1:8081",
-    "http://192.168.225.215:8080"
+    "http://192.168.225.215:8080",
+    "http://192.168.225.190:8080"
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

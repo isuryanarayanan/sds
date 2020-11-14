@@ -43,18 +43,6 @@ const routes = [
       }
     },
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../views/Profile.vue"),
-    beforeEnter: function(to, from, next) {
-      if (store.getters["user/get_authenticated"]) {
-        next();
-      } else {
-        next({ name: "GetStarted" });
-      }
-    },
-  },
 ];
 
 const router = new VueRouter({
