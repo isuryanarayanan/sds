@@ -1,6 +1,5 @@
 # Social Distancing Scheduler
 
-- Author [DevDooDan](https://www.instagram.com/devdoodan/)
 - backend `Django`
 - frontend `Vue js`
 
