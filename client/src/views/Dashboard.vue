@@ -5,25 +5,25 @@
       <h5 class="font2">Welcome to your dashboard.</h5>
     </div>
     <v-tabs dark>
-      <v-tab>Scheduler</v-tab>
-    </v-tabs>
-    <v-tabs-items>
+      <v-tab>Dashboard</v-tab>
       <v-tab-item>
-        <v-card color="basil" flat>
-          <v-card-text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-            corrupti impedit debitis aliquam, reprehenderit corporis sunt
-            voluptatem eos sed dolore adipisci suscipit perferendis, deserunt
-            est molestiae veniam exercitationem repellendus excepturi.
-          </v-card-text>
-        </v-card>
+        <calendar />
       </v-tab-item>
-    </v-tabs-items>
+    </v-tabs>
   </div>
 </template>
 
 <script>
+import calendar from "../components/Calendar/calendarComponent.vue";
 export default {
   name: "Dashboard",
+  components: {
+    calendar,
+  },
+  data() {
+    return {
+      tabs: null,
+    };
+  },
 };
 </script>
