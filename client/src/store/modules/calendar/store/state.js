@@ -21,7 +21,7 @@ export default () => ({
     day: "Day",
     "4day": "4 Days",
   },
-  colors: ["#2196F3", "#3F51B5", "#673AB7", "#4CAF50", "#FF9800", "#757575"],
+  colors: ["#42b983", "#3F51B5", "#673AB7", "#4CAF50", "#FF9800", "#2c3e50"],
   names: [
     "Meeting",
     "Holiday",
